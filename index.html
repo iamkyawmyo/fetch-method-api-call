@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h1>Javascript API call using Fetch()</h1>
+    <div class="post"></div>
+
+
+    <script>
+        const url = "https://jsonplaceholder.typicode.com/posts"
+
+        //get posts from api
+        async function getPosts() {
+            try {
+                return (await fetch(url)).json();
+                // let res = await fetch(url);
+                // return await res.json();
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        //render data from api in html page
+        async function renderPosts() {
+            let posts = await getPosts()
+            let html = "";
+            posts.forEach(post => {
+                let htmlSegment = `<div>                        
+                            <h2>${post.id}</h2>
+                            <h3><u>${post.title}</u></h3>
+                            <p>${post.body}</p>
+                            <hr>                          
+                        </div>`;
+
+                html += htmlSegment;
+            })
+
+            let container = document.querySelector('.post');
+            container.innerHTML = html;
+        }
+
+        //calling render function to display html
+        renderPosts()
+
+    </script>
+</body>
+
+</html>
